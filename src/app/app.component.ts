@@ -1,10 +1,27 @@
-import { Component } from '@angular/core';
+//import Component from angular core
+import {Component} from '@angular/core';
 
+//import our Carousel Component
+import {CSSCarouselComponent} from './carousel.component';
+
+//@Component decorator
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	//tag
+	selector: 'my-app',
+	//template
+	template: `
+	<div class="wrapper">
+    <css-carousel></css-carousel>
+    </div>
+  `,
+   //css
+	styles: [`
+   .wrapper{
+      width: 60%;
+      margin: 60px auto;
+    }
+  `]
+  //tell angular we are using the css-carousel tag in this component
 })
-export class AppComponent {
-  title = 'app works!';
-}
+//actual class
+export class AppComponent { }
