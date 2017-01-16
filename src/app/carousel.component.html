@@ -1,8 +1,16 @@
 <div class="carousel">
- <ul class="slides">
-   <li *ngFor="#image of images">
-     <h2>{{image.title}}</h2>
-     <img src="{{image.url}}" alt="">
-   </li>
- </ul>
+  <ul class="slides">
+    <li *ngFor="let image of images">
+      <h2>{{image.title}}</h2>
+      <img src="{{image.url}}" alt="">
+    </li>
+  </ul>
+  <a class="left carousel-control" (click)="prev()" *ngIf="images.length" role="button" data-slide="prev">
+    <span class="icon-prev" aria-hidden="true"></span>
+    <span *ngIf="isBS4" class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" (click)="next()" *ngIf="images.length" role="button" data-slide="next">
+    <span class="icon-next" aria-hidden="true"></span>
+    <span *ngIf="isBS4" class="sr-only">Next</span>
+  </a>
 </div>
