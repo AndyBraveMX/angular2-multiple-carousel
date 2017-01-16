@@ -5,7 +5,7 @@ import {   trigger,
   animate,
   transition,
   keyframes,
-  AnimationTransitionEvent} from '@angular/core';
+  AnimationTransitionEvent, NgZone} from '@angular/core';
   import {Image} from './image.interface';
   import { Http } from '@angular/http';
 
@@ -17,27 +17,15 @@ import {   trigger,
     templateUrl: './carousel.component.html',
     styleUrls: [ './carousel.component.css' ],
     animations: [
-      trigger('focusPanel', [
-        state('inactive', style({
-          transform: 'scale(1)',
-          backgroundColor: '#eee'
-        })),
-        state('active', style({
-          transform: 'scale(3)',
-          backgroundColor: '#cfd8dc'
-        })),
-        transition('inactive => active', animate('100ms ease-in')),
-        transition('active => inactive', animate('100ms ease-out'))
-      ]),
-      trigger('movePanel', [
-        transition('void => *', [
-          animate(600, keyframes([
-            style({opacity: 0, transform: 'translateX(-200px)', offset: 0}),
-            style({opacity: 1, transform: 'translateX(25px)', offset: .75}),
-            style({opacity: 1, transform: 'translateX(0)', offset: 1}),
-          ]))
-        ])
-
+      trigger('wobble', [
+        transition('active => inactive', animate(1000, keyframes([
+          style({transform: 'translateX(-100%)', offset: .15}),
+          // style({transform: 'translateX(-10px)', offset: .30}),
+          // style({transform: 'translateX(-20px)', offset: .45}),
+          // style({transform: 'translateX(-30px)', offset: .60}),
+          // style({transform: 'translateX(-40px)', offset: .75}),
+          // style({transform: 'none', offset: 1}),
+        ]))),
       ])
     ]
   })
@@ -47,7 +35,21 @@ import {   trigger,
     //images data to be bound to the template
     public images = IMAGES;
     private currentSlide:Image;
-    state: string = 'inactive';
+
+    public wobbleState: string;
+
+    triggerAnimation() {
+      this.wobbleState = "active";
+    }
+
+    constructor(public zone: NgZone) {
+      }
+
+    reset() {
+      this.zone.run(() => {
+        this.wobbleState = "inactive";
+      });
+    }
 
     public next():any {
       let newIndex = (this.getCurrentIndex() + 1) % this.images.length;
@@ -55,13 +57,13 @@ import {   trigger,
       //   this.pause();
       //   return;
       // }
-      this.state = (this.state === 'inactive' ? 'active' : 'inactive');
       return this.select(this.getSlideByIndex(newIndex), Direction.NEXT);
     }
 
     private getCurrentIndex():number {
       return !this.currentSlide ? 0 : this.currentSlide.index;
     }
+
 
     private getSlideByIndex(index:number):any {
       let len = this.images.length;
