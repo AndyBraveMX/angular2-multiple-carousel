@@ -18,8 +18,12 @@ import {   trigger,
     styleUrls: [ './carousel.component.css' ],
     animations: [
       trigger('wobble', [
-        transition('active => inactive', animate(1000, keyframes([
-          style({transform: 'translateX(-100%)', offset: .15}),
+        transition('active => inactive', animate(500, keyframes([
+          style({opacity: 1, transform: 'translateX(-25%)', offset: .25}),
+          style({opacity: 1, transform: 'translateX(-50%)', offset: .50}),
+          style({opacity: 1, transform: 'translateX(-75%)', offset: .75}),
+          style({opacity: 1, transform: 'translateX(-100%)', offset: 1}),
+                    // style({opacity: 1, transform: 'translateX(0)', offset: 1})
           // style({transform: 'translateX(-10px)', offset: .30}),
           // style({transform: 'translateX(-20px)', offset: .45}),
           // style({transform: 'translateX(-30px)', offset: .60}),
