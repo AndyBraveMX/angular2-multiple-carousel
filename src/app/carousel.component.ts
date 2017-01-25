@@ -16,25 +16,29 @@ import {   trigger,
     selector: 'css-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: [ './carousel.component.css' ],
-    animations: [
-      trigger('wobble', [
-        transition('active => inactive', animate(500, keyframes([
-          style({opacity: 1, transform: 'translateX(-25%)', offset: .25}),
-          style({opacity: 1, transform: 'translateX(-50%)', offset: .50}),
-          style({opacity: 1, transform: 'translateX(-75%)', offset: .75}),
-          style({opacity: 1, transform: 'translateX(-100%)', offset: 1}),
-                    // style({opacity: 1, transform: 'translateX(0)', offset: 1})
-          // style({transform: 'translateX(-10px)', offset: .30}),
-          // style({transform: 'translateX(-20px)', offset: .45}),
-          // style({transform: 'translateX(-30px)', offset: .60}),
-          // style({transform: 'translateX(-40px)', offset: .75}),
-          // style({transform: 'none', offset: 1}),
-        ]))),
-      ])
-    ]
+    host: {
+      '[style.height.px]':'0.9 * height',
+      '[style.right.px]':'0.21 * right'
+    }
   })
   //Carousel Component itself
   export class CSSCarouselComponent {
+
+    cont = 10;
+    @Input() iLike = false;
+    @Input() px = 50;
+    width:number=200;
+    height: number;
+    right:number=200;
+
+    onClick(){
+      this.iLike = !this.iLike;
+      this.cont += this.iLike ? 1 : -1;
+      this.px +=50;
+      this.right=this.right+20;
+      this.height=this.height+20;
+      console.log(this.width);
+    }
 
     //images data to be bound to the template
     public images = IMAGES;
@@ -47,7 +51,9 @@ import {   trigger,
     }
 
     constructor(public zone: NgZone) {
-      }
+      this.height = window.innerHeight;
+      this.width = window.innerWidth;
+    }
 
     reset() {
       this.zone.run(() => {

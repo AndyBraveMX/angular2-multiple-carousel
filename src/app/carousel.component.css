@@ -11,7 +11,13 @@
     /*-moz-animation:carousel 30s infinite;
     -webkit-animation:carousel 30s infinite;
     animation:carousel 30s infinite;*/
+    right: 50px;
 }
+
+.right{
+  right: 50px;
+}
+
 .slides > li{
      position:relative;
      float:left;

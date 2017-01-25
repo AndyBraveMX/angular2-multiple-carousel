@@ -1,12 +1,13 @@
 <div class="carousel">
   <ul class="slides">
     <li *ngFor="let image of images"
-      [@wobble]="wobbleState" (@wobble.done)="reset()">
+      [style.height.px]="height"
+      [style.right.px]="right">
       <h2>{{image.title}}</h2>
       <img src="{{image.url}}" alt="">
     </li>
   </ul>
-  <a class="left carousel-control" (click)="prev()" *ngIf="images.length" role="button" data-slide="prev" >
+  <a class="left carousel-control" (click)="onClick()" *ngIf="images.length" role="button" data-slide="prev" >
     <span class="icon-prev" aria-hidden="true"></span>
     <span *ngIf="isBS4" class="sr-only">Previous</span>
   </a>
